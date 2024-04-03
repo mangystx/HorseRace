@@ -22,7 +22,17 @@ namespace HorseRace
 
 		public Color Color { get; private set; }
 
-		public TimeSpan Time { get; set; }
+		private TimeSpan _time;
+
+		public TimeSpan Time 
+		{
+			get => _time;
+			set
+			{
+				_time = value;
+				Finished = true;
+			}
+		}
 
 		public int Speed { get; private set; }
 
@@ -42,7 +52,7 @@ namespace HorseRace
 
         public double Coefficient { get; set; }
 
-		public bool Finished => Time != null;
+		public bool Finished { get; private set; }
 
 		public Horse(string name, Color color, int x, int y)
 		{

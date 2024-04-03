@@ -94,7 +94,7 @@ namespace HorseRace
 				Canvas.SetTop(horse.JockeyImage, horse.PositionY - 30);
 				
 
-				if (horse.PositionX >= 600)
+				if (horse.PositionX >= 600 && !horse.Finished)
 				{
 					horse.Time = raceStopwatch.Elapsed;
 					_finishedCount++;
@@ -127,7 +127,7 @@ namespace HorseRace
 			for (int i = raceTrack.Children.Count - 1; i >= 0; i--)
 			{
 				var child = raceTrack.Children[i];
-				if (child is UIElement element && element.Name as string == "tmp")
+				if (child is FrameworkElement element && element.Tag as string == "tmp")
 				{
 					raceTrack.Children.RemoveAt(i);
 				}
