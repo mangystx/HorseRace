@@ -27,22 +27,22 @@
 
 			<Border Background="LightGray" Margin="5">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-					<Button Content="&#x25C0;" Margin="5" />
+					<Button Content="&#x25C0;" Margin="5" Click="Previous_Bet_Btn_Click"/>
 					<TextBlock Text="{Binding CurrentBet, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, StringFormat='{}{0}$'}" Margin="5" FontSize="16" FontWeight="Bold"/>
-					<Button Content="&#x25B6;" Margin="5" />
+					<Button Content="&#x25B6;" Margin="5" Click="Next_Bet_Btn_Click" />
 				</StackPanel>
 			</Border>
 
 			<Border Background="LightGray" Margin="5">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-					<Button Content="&#x25C0;" Margin="5" />
+					<Button Content="&#x25C0;" Margin="5" Click="Previous_Horse_Btn_Click"/>
 					<TextBlock Text="{Binding CurrentActiveHorse, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" FontSize="16" Margin="5" />
-					<Button Content="&#x25B6;" Margin="5" />
+					<Button Content="&#x25B6;" Margin="5" Click="Next_Horse_Btn_Click" />
 				</StackPanel>
 			</Border>
 
 			<Border Background="Orange" Margin="5" Height="30" >
-				<Button Content="BET" Margin="45 3 45 3" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
+				<Button x:Name="BetBtn" Content="BET" Margin="45 3 45 3" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" Click="BetBtn_Click"/>
 			</Border>
 		</StackPanel>
 

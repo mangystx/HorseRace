@@ -158,5 +158,32 @@ namespace HorseRace
 				}
 			}
 		}
+
+		private void Previous_Bet_Btn_Click(object sender, RoutedEventArgs e)
+		{
+			if (_currentBetIndex == 0) _currentBetIndex = _bets.Count - 1;
+			else _currentBetIndex--;
+		}
+
+		private void Next_Bet_Btn_Click(object sender, RoutedEventArgs e)
+		{
+			if (_currentBetIndex == _bets.Count - 1) _currentBetIndex = 0;
+			else _currentBetIndex++;
+		}
+
+		private void Previous_Horse_Btn_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void Next_Horse_Btn_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void BetBtn_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }
