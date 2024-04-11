@@ -24,9 +24,26 @@ namespace HorseRace
 		private DispatcherTimer animationTimer = new();
 
 		private List<string> _horsesNames = ["Lucky", "Ranger", "Willow", "Tucker", "Sabrina"];
+
+		private List<string> _activeHorsesNames = ["Lucky"];
+		private int _currentActiveHorseIndex = 0;
+		public string CurrentActiveHorse => _activeHorsesNames[_currentActiveHorseIndex];
+
+		private List<int> _bets = [10, 20, 50, 100, 200, 300, 500, 1000];
+		private int _currentBetIndex = 0;
+		public int CurrentBet => _bets[_currentBetIndex];
+
 		private List<Color> _jockeyColors = [Colors.Red, Colors.Blue, Colors.Green, Colors.White, Colors.Orange];
 
+
 		private int _finishedCount = 0;
+
+		private double _balance = 1000;
+		public double Balance
+		{
+			get { return _balance; }
+			set { _balance = value; }
+		}
 
 
 		public MainWindow()
@@ -104,6 +121,14 @@ namespace HorseRace
 						break;
 					}
 				}
+			}
+
+			horses = new ObservableCollection<Horse>(horses.OrderByDescending(horse => horse.PositionX));
+			HorsesDataGrid.ItemsSource = horses;
+
+			for (var i = 0; i < horses.Count; i++) 
+			{
+				horses[i].CurrentPosition = i + 1;
 			}
 		}
 

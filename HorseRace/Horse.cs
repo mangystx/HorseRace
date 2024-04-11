@@ -36,6 +36,8 @@ namespace HorseRace
 
 		public int Speed { get; private set; }
 
+		public int CurrentPosition { get; set; }
+
 		public int PositionX { get; private set; }
 
 		public int PositionY { get; private set; }
