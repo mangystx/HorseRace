@@ -27,11 +27,37 @@ namespace HorseRace
 
 		private List<string> _activeHorsesNames = ["Lucky"];
 		private int _currentActiveHorseIndex = 0;
+		private int CurrentActiveHorseIndex 
+		{
+			get => _currentActiveHorseIndex;
+
+			set
+			{
+				if (value < 0) _currentActiveHorseIndex = _activeHorsesNames.Count - 1;
+				else if (value > _activeHorsesNames.Count - 1) _currentActiveHorseIndex = 0;
+				else _currentActiveHorseIndex = value;
+
+				OnCrtActiveHorseIndexChanging();
+			}
+		}
+
 		public string CurrentActiveHorse => _activeHorsesNames[_currentActiveHorseIndex];
 
 		private List<int> _bets = [10, 20, 50, 100, 200, 300, 500, 1000];
 		private int _currentBetIndex = 0;
-		public int CurrentBet => _bets[_currentBetIndex];
+		public int CurrentBetIndex 
+		{
+			get => _currentBetIndex; 
+
+			set
+			{
+				if (value < 0) _currentBetIndex = _bets.Count - 1;
+				else if (value > _bets.Count - 1) _currentBetIndex = 0;
+				else _currentBetIndex = value;
+				
+				OnCrtBetIndexChanging();
+			}
+		}
 
 		private List<Color> _jockeyColors = [Colors.Red, Colors.Blue, Colors.Green, Colors.White, Colors.Orange];
 
@@ -93,7 +119,7 @@ namespace HorseRace
 
 		private void InitializeAnimationTimer()
 		{
-			animationTimer.Interval = TimeSpan.FromMilliseconds(100);
+			animationTimer.Interval = TimeSpan.FromMilliseconds(80);
 			animationTimer.Tick += async (sender, e) => await UpdateHorsePositionsAsync();
 		}
 
@@ -159,31 +185,21 @@ namespace HorseRace
 			}
 		}
 
-		private void Previous_Bet_Btn_Click(object sender, RoutedEventArgs e)
-		{
-			if (_currentBetIndex == 0) _currentBetIndex = _bets.Count - 1;
-			else _currentBetIndex--;
-		}
+		private void Previous_Bet_Btn_Click(object sender, RoutedEventArgs e) => CurrentBetIndex--;
 
-		private void Next_Bet_Btn_Click(object sender, RoutedEventArgs e)
-		{
-			if (_currentBetIndex == _bets.Count - 1) _currentBetIndex = 0;
-			else _currentBetIndex++;
-		}
+		private void Next_Bet_Btn_Click(object sender, RoutedEventArgs e) => CurrentBetIndex++;
 
-		private void Previous_Horse_Btn_Click(object sender, RoutedEventArgs e)
-		{
+		private void Previous_Horse_Btn_Click(object sender, RoutedEventArgs e) => CurrentActiveHorseIndex--;
 
-		}
-
-		private void Next_Horse_Btn_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
+		private void Next_Horse_Btn_Click(object sender, RoutedEventArgs e) => CurrentActiveHorseIndex++;
 
 		private void BetBtn_Click(object sender, RoutedEventArgs e)
 		{
 
 		}
+
+		private void OnCrtBetIndexChanging() => betDisplay.Text = $"{_bets[CurrentBetIndex]}$";
+
+		private void OnCrtActiveHorseIndexChanging() => activeHorseNameDisplay.Text = _activeHorsesNames[CurrentActiveHorseIndex];
 	}
 }

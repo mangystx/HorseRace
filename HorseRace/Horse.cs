@@ -50,9 +50,33 @@ namespace HorseRace
 			set => _animationFrame = (value % 8);
 		}
 
-		public double Money { get; set; }
+		private bool _isBidClosed;
 
-        public double Coefficient { get; set; }
+		public bool IsBidClosed
+		{
+			get => _isBidClosed;
+			set
+			{
+				_isBidClosed = value;
+
+				if (value) CloseTheBet();
+			}
+		}
+
+        public double Money { get; set; }
+
+		private double _coefficient;
+
+        public double Coefficient 
+		{
+			get => _coefficient; 
+
+			set 
+			{
+				_coefficient = value;
+				if (_coefficient <= 1) IsBidClosed = true;
+			}
+		}
 
 		public bool Finished { get; private set; }
 
@@ -60,8 +84,10 @@ namespace HorseRace
 		{
 			Name = name;
 			Color = color;
+			IsBidClosed = false;
 
-			Speed = _random.Next(7, 11);
+			Speed = _random.Next(3, 7);
+			Coefficient = 1.7 - Speed / 10.0;
 			AnimationFrame = 0;
 
 			HorseImage = new Image
@@ -93,6 +119,18 @@ namespace HorseRace
 
 			HorseImage.Source = new BitmapImage(new Uri($"Images/Horses/WithOutBorder_00{fileNumber}.png", UriKind.Relative));
 			JockeyImage.Source = new BitmapImage(new Uri($"Images/HorsesMask/mask_00{fileNumber}.png", UriKind.Relative));
+
+			CalculateCoefficient();
+		}
+
+		private void CalculateCoefficient()
+		{
+			Coefficient = Math.Round(1.7 - Speed / 10.0 + CurrentPosition / 10.0 - (CurrentPosition == 1 ? PositionX / 2500.0 : 0), 2);
+		}
+
+		private void CloseTheBet() 
+		{
+
 		}
 	}
 }
