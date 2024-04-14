@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Reflection.Metadata;
+using System.Windows;
 
 namespace HorseRace
 {
@@ -50,20 +51,19 @@ namespace HorseRace
 			set => _animationFrame = (value % 8);
 		}
 
-		private bool _isBidClosed;
+		public bool IsBidClosed { get; set; }
 
-		public bool IsBidClosed
+		private double _money;
+
+        public double Money 
 		{
-			get => _isBidClosed;
+			get => _money;
 			set
 			{
-				_isBidClosed = value;
-
-				if (value) CloseTheBet();
-			}
+				_money = Math.Round(value * Coefficient, 2);
+				IsBidClosed = true;
+			} 
 		}
-
-        public double Money { get; set; }
 
 		private double _coefficient;
 
@@ -78,13 +78,30 @@ namespace HorseRace
 			}
 		}
 
-		public bool Finished { get; private set; }
+		private bool _finished;
 
-		public Horse(string name, Color color, int x, int y)
+		public bool Finished 
+		{
+			get => _finished;
+			private set 
+			{
+				_finished = value;
+				if (value)
+				{
+					IsBidClosed = true;
+					if (CurrentPosition == 1) ChangeBalance(Money * Coefficient);
+				}
+			} 
+		}
+
+		public Action<double> ChangeBalance;
+
+		public Horse(string name, Color color, int x, int y, Action<double> changeBalance)
 		{
 			Name = name;
 			Color = color;
 			IsBidClosed = false;
+			ChangeBalance += changeBalance;
 
 			Speed = _random.Next(3, 7);
 			Coefficient = 1.7 - Speed / 10.0;
@@ -120,17 +137,15 @@ namespace HorseRace
 			HorseImage.Source = new BitmapImage(new Uri($"Images/Horses/WithOutBorder_00{fileNumber}.png", UriKind.Relative));
 			JockeyImage.Source = new BitmapImage(new Uri($"Images/HorsesMask/mask_00{fileNumber}.png", UriKind.Relative));
 
-			CalculateCoefficient();
+			if (!IsBidClosed)
+			{
+				CalculateCoefficient();
+			}
 		}
 
 		private void CalculateCoefficient()
 		{
 			Coefficient = Math.Round(1.7 - Speed / 10.0 + CurrentPosition / 10.0 - (CurrentPosition == 1 ? PositionX / 2500.0 : 0), 2);
-		}
-
-		private void CloseTheBet() 
-		{
-
 		}
 	}
 }

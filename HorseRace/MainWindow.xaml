@@ -22,7 +22,7 @@
 			</Border>
 
 			<Border Background="Transparent" Margin="5" Height="25">
-				<TextBlock Text="{Binding Balance, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, StringFormat='Current Balance: ${0}'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+				<TextBlock x:Name="displayBalance" Text="{Binding Balance, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, StringFormat='Balance: {0}$'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
 			</Border>
 
 			<Border Background="LightGray" Margin="5">
@@ -42,7 +42,7 @@
 			</Border>
 
 			<Border Background="Orange" Margin="5" Height="30" >
-				<Button x:Name="BetBtn" Content="BET" Margin="45 3 45 3" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" Click="BetBtn_Click"/>
+				<Button x:Name="BetBtn" Content="BET" Margin="45 3 45 3" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" IsEnabled="False" Click="BetBtn_Click"/>
 			</Border>
 		</StackPanel>
 
